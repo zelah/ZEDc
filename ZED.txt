@@ -333,12 +333,25 @@ comment:
 #true
 (comp!aaa) "programized" (001) "open-output-string"
 
+
 (comp!aaa) "programized" "output-string"
 comment:
 #true
 (003) "begin" 
          (003) "write" "programized" "output-string"
-         (003) "for-each" printFunction (pop) (002) "read" (002) "open-input-string" (002) "get-output-string" "output-string"
+         (comp!aaaa) (pop) (002) "read" (002) "open-input-string" (002) "get-output-string" "output-string"
+
+(comp!aaaa) "program"
+comment:
+#true
+(003) "begin"
+         (003) "for-each" printSignature "program"
+         (003) "for-each" printFunction "program"
+
+(printSignature) "function"
+comment:
+#true
+(003) "begin" (003) "for-each" "display" (makeFunctionSignature) (top) (pop) "function" (002) "display" #;
 
 (comp)
 comment:
