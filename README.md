@@ -1,4 +1,4 @@
 ZEDc
 ====
 
-porting tinyZED to C
+typed ZED to C compiler
