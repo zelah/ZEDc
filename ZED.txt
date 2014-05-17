@@ -94,11 +94,13 @@ comment:
 (makeFunctionSignature1) stack
 comment:
 #true
-(push) (top) stack
+(push) "'static"
   (push) #space
-    (push) (top) (pop) stack
-      (push) #(
-        (003) "append"
+    (push) (top) stack
+      (push) #space
+        (push) (top) (pop) stack
+          (push) #(
+            (003) "append"
                   (add-between) #space (addBetweenTwo) #, (pop) (pop) stack
                   (002) "list" #)
 
