@@ -626,7 +626,7 @@ uc gt1(z one,z two)
 
 z gt(z one,z two)
 {
-  if(e(one)>e(two)||(e(one)==e(two)&>1(c(one),c(two))))
+  if(e(one)>e(two)||(e(one)==e(two)&&gt1(c(one),c(two))))
   {
     f(two);
     one.y[1].uc=1;
@@ -946,7 +946,7 @@ uc lt1(z one,z two)
 
 z lt(z one,z two)
 {
-  if(e(one)<e(two)||(e(one)==e(two)&<1(c(one),c(two))))
+  if(e(one)<e(two)||(e(one)==e(two)&&lt1(c(one),c(two))))
   {
     f(two);
     one.y[1].uc=1;
