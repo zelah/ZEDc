@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
- 
+
 typedef union z z;
 union z
 {
@@ -86,283 +86,136 @@ typedef z (*f18)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f19)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f20)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 ul const block=1024;
- 
+
+z n();
+
+z ps(z object,z stack);
+
+ul size(ul extent);
+
+ul e(z object);
+
+void f(z stack);
+
 void displayLine(z object);
- 
-z n()
+
+void display(z object);
+
+void display1(z object);
+
+z c(z object);
+
+z t(z pair);
+
+z p(z pair);
+
+void displaySpace(z object);
+
+z ad(z one,z two);
+
+z lt(z one,z two);
+
+uc lt1(z one,z two);
+
+z pp(z stack);
+
+uc as(z value);
+
+z ad4(z one,z two);
+
+z ad3(z one,z two,uc carry,ul index1,ul index2);
+
+uc ad2(uc one,uc two,uc carry);
+
+uc ad1(uc one,uc two,uc carry);
+
+z rv(z stack);
+
+z sb(z one,z two);
+
+z sb3(z one,z two,uc borrow,ul index1,ul index2);
+
+uc sb2(uc one,uc two,uc borrow);
+
+uc sb1(uc one,uc two,uc borrow);
+
+z sb4(z value);
+
+z inc(z character);
+
+z mp(z fun,z stack);
+
+z mu(z one,z two);
+
+z u(z one,z two);
+
+z mu2(z one,z two,z control);
+
+z gt(z one,z two);
+
+uc gt1(z one,z two);
+
+z mu1(z one,z two,z control,z compare,z result);
+
+z twice(z number);
+
+z dv(z one,z two);
+
+z dv2(z one,z two,z control);
+
+z dv1(z one,z two,z control,z compare,z result);
+
+z q(z one,z two);
+
+uc q1(z one,z two);
+
+z kp(z fun,z stack);
+
+z kp1(z fun,z stack,z result);
+
+z tp(z stack);
+
+z rd(z fin,z fun,z stack);
+
+z rd1(z fun,z stack);
+
+z no(z value);
+
+z nu(z value);
+
+z a(z one,z two);
+
+z o(z one,z two);
+
+z x(z one,z two);
+
+z v(z list);
+
+z v1(z list,z result);
+
+z r(z fin,z fun,z list);
+
+z r1(z fun,z list);
+
+z pr(z value);
+
+z k(z fun,z list);
+
+z k1(z fun,z list,z result);
+
+z m(z fun,z list);
+
+z m1(z fun,z list,z result);
+
+z md(z one,z two);
+
+
+
+z md(z one,z two)
 {
-  z result;
-  result.y=(y)malloc((block+1)*sizeof(z));
-  result.y+=block-2;
-  result.y[0].ul=2;
-  result.y[1].uc=1;
-  result.y[2].ul=0;
-  return result;
+  return sb(one,mu(two,dv(c(one),c(two))));
 }
- 
-ul e(z object)
-{
-  return object.y[0].ul;
-}
- 
-ul size(ul extent)
-{
-  return ((extent-1)/block+1)*block;
-}
- 
-z c(z object)
-{
-  ul sz=size(e(object));
-  z result;
-  result.y=(y)malloc((sz+1)*sizeof(z));
-  result.y+=sz-e(object);
-  ul i;
-  for(i=0;i<=e(object);++i)
-  {
-    result.y[i]=object.y[i];
-  }
-  return result;
-}
- 
-void f(z stack)
-{
-  ul sz=size(e(stack));
-  stack.y-=sz-e(stack);
-  free(stack.y);
-}
- 
-z ps(z object,z stack)
-{
-  ul sz=size(e(stack)+1);
-  if(e(stack)+block==sz)
-  {
-    z result;
-    result.y=(y)malloc((sz+1)*sizeof(z));
-    result.y+=sz-e(stack)-1;
-    result.y[0].ul=e(stack)+1;
-    result.y[1].uc=1;
-    result.y[2].ul=0;
-    result.y[3]=object;
-    ++result.y;
-    ul i;
-    for(i=3;i<=e(stack);++i)
-    {
-     result.y[i]=stack.y[i];
-    }
-    --result.y;
-    f(stack);
-    return result;
-  }
-  else
-  {
-    --stack.y;
-    stack.y[0].ul=stack.y[1].ul+1;
-    stack.y[1].uc=1;
-    stack.y[2].ul=0;
-    stack.y[3]=object;
-    return stack;
-  }
-}
- 
-z pp(z stack)
-{
-  ul sz=size(e(stack)-1);
-  if(sz<e(stack))
-  {
-    z result;
-    result.y=(y)malloc((sz+1)*sizeof(z));
-    result.y[0].ul=e(stack)-1;
-    result.y[1].uc=1;
-    result.y[2].ul=0;
-    ul i;
-    ++stack.y;
-    for(i=3;i<=e(result);++i)
-    {
-      result.y[i]=stack.y[i];
-    }
-    --stack.y;
-    f(stack);
-    return result;
-  }
-  else
-  {
-    stack.y[3].ul=0;
-    stack.y[2].uc=1;
-    stack.y[1].ul=e(stack)-1;
-    ++stack.y;
-    return stack;
-  }
-}
- 
-z tp(z stack)
-{
-  z result=stack.y[3];
-  f(stack);
-  return result;
-}
- 
-z rv(z stack)
-{
-  stack.y[1].uc=1;
-  ul i;
-  z temp;
-  ul r=e(stack);
-  ul m=(r+2)/2;
-  for(i=3;i<=m;++i)
-  {
-    temp=stack.y[i];
-    stack.y[i]=stack.y[r];
-    stack.y[r]=temp;
-    --r;
-  }
-  return stack;
-}
- 
-z mp(z fun,z stack)
-{
-  stack.y[1].uc=1;
-  ul i;
-  for(i=3;i<=e(stack);++i)
-  {
-    stack.y[i]=fun.f1(stack.y[i]);
-  }
-  return stack;
-}
- 
-z kp1(z fun,z stack,z result)
-{
-  if(e(stack)==2)
-  {
-    f(stack);
-    return result;
-  }
-  else
-  {
-    if(fun.f1(tp(c(stack))).uc)
-    {
-      result=ps(tp(c(stack)),result);
-    }
-    return kp1(fun,pp(stack),result);
-  }
-}
- 
-z kp(z fun,z stack)
-{
-  return kp1(fun,rv(stack),n());
-}
- 
-z rd1(z fun,z stack)
-{
-  if(e(stack)==3)
-  {
-    return tp(stack);
-  }
-  else
-  {
-    z combined;
-    combined=fun.f2(tp(pp(c(stack))),tp(c(stack)));
-    stack=pp(pp(stack));
-    return rd1(fun,ps(combined,stack));
-  }
-}
- 
-z rd(z fin,z fun,z stack)
-{
-  return rd1(fun,ps(fin,rv(stack)));
-}
- 
-z u(z one,z two)
-{
-  ul ex=e(one)+e(two)+3;
-  ul sz=size(ex);
-  ul i;
-  if(sz==size(e(two)))
-  {
-    two.y[1].uc=1;
-    two.y-=e(one)+1;
-    two.y[0]=one.y[0];
-    two.y[1].uc=1;
-    for(i=2;i<=e(one);++i)
-    {
-      two.y[i]=one.y[i];
-    }
-    two.y-=2;
-    two.y[0].ul=ex;
-    two.y[1].uc=1;
-    f(one);
-    return two;
-  }
-  else
-  {
-    z result;
-    result.y=(y)malloc((sz+1)*sizeof(z));
-    result.y+=sz-e(one)-e(two)-3;
-    result.y[0].ul=ex;
-    result.y[1].uc=1;
-    result.y+=2;
-    result.y[0]=one.y[0];
-    result.y[1].uc=1;
-    for(i=2;i<=e(one);++i)
-    {
-      result.y[i]=one.y[i];
-    }
-    result.y+=e(one)+1;
-    result.y[0]=two.y[0];
-    result.y[1].uc=1;
-    for(i=2;i<=e(two);++i)
-    {
-      result.y[i]=two.y[i];
-    }
-    result.y-=e(one)+1;
-    result.y-=2;
-    f(one);
-    f(two);
-    return result;
-  }
-}
- 
-z t(z pair)
-{
-  z result;
-  pair.y+=2;
-  result=c(pair);
-  pair.y-=2;
-  f(pair);
-  return result;
-}
- 
-z p(z pair)
-{
-  z result;
-  pair.y+=2;
-  ul jump=e(pair)+1;
-  pair.y+=jump;
-  result=c(pair);
-  pair.y-=jump;
-  pair.y-=2;
-  f(pair);
-  return result;
-}
- 
-z v1(z list,z result)
-{
-  if(e(list)==2)
-  {
-    f(list);
-    return result;
-  }
-  else
-  {
-    result=u(t(c(list)),result);
-    return v1(p(list),result);
-  }
-}
- 
-z v(z list)
-{
-  return v1(list,n());
-}
- 
+
 z m1(z fun,z list,z result)
 {
   if(e(list)==2)
@@ -376,12 +229,12 @@ z m1(z fun,z list,z result)
     return m1(fun,p(list),result);
   }
 }
- 
+
 z m(z fun,z list)
 {
   return m1(fun,v(list),n());
 }
- 
+
 z k1(z fun,z list,z result)
 {
   if(e(list)==2)
@@ -401,12 +254,25 @@ z k1(z fun,z list,z result)
     return k1(fun,p(list),result);
   }
 }
- 
+
 z k(z fun,z list)
 {
   return k1(fun,v(list),n());
 }
- 
+
+z pr(z value)
+{
+  if(value.y[2].ul==0)
+  {
+    value.y[1].uc=0;
+  }
+  else
+  {
+    value.y[1].uc=1;
+  }
+  return value;
+}
+
 z r1(z fun,z list)
 {
   z rest;
@@ -423,86 +289,31 @@ z r1(z fun,z list)
     return r1(fun,u(temp,p(p(list))));
   }
 }
- 
+
 z r(z fin,z fun,z list)
 {
   return r1(fun,u(fin,v(list)));
 }
- 
-uc as(z value)
+
+z v1(z list,z result)
 {
-  uc result=value.y[1].uc;
-  f(value);
-  return result;
-}
- 
-z no(z value)
-{
-  if(value.y[1].uc)
+  if(e(list)==2)
   {
-    value.y[1].uc=0;
+    f(list);
+    return result;
   }
   else
   {
-    value.y[1].uc=1;
+    result=u(t(c(list)),result);
+    return v1(p(list),result);
   }
-  return value;
 }
- 
-z nu(z value)
+
+z v(z list)
 {
-  if(e(value)==2)
-  {
-    value.y[1].uc=1;
-  }
-  else
-  {
-    value.y[1].uc=0;
-  }
-  return value;
+  return v1(list,n());
 }
- 
-z pr(z value)
-{
-  if(value.y[2].ul==0)
-  {
-    value.y[1].uc=0;
-  }
-  else
-  {
-    value.y[1].uc=1;
-  }
-  return value;
-}
- 
-z a(z one,z two)
-{
-  if(one.y[1].uc)
-  {
-    f(one);
-    return two;
-  }
-  else
-  {
-    f(two);
-    return one;
-  }
-}
- 
-z o(z one,z two)
-{
-  if(one.y[1].uc)
-  {
-    f(two);
-    return one;
-  }
-  else
-  {
-    f(one);
-    return two;
-  }
-}
- 
+
 z x(z one,z two)
 {
   if(one.y[1].uc)
@@ -516,91 +327,110 @@ z x(z one,z two)
     return two;
   }
 }
- 
-uc lt1(z one,z two)
+
+z o(z one,z two)
 {
-  if(e(one)==2)
-  {
-    f(one);
-    f(two);
-    return 0;
-  }
-  else if(one.y[3].uc<two.y[3].uc)
-  {
-    f(one);
-    f(two);
-    return 1;
-  }
-  else if(one.y[3].uc>two.y[3].uc)
-  {
-    f(one);
-    f(two);
-    return 0;
-  }
-  else
-  {
-    return lt1(pp(one),pp(two));
-  }
-}
- 
-z lt(z one,z two)
-{
-  if(e(one)<e(two)||(e(one)==e(two)&&lt1(c(one),c(two))))
+  if(one.y[1].uc)
   {
     f(two);
-    one.y[1].uc=1;
     return one;
   }
   else
   {
     f(one);
-    two.y[1].uc=0;
     return two;
   }
 }
- 
-uc gt1(z one,z two)
+
+z a(z one,z two)
 {
-  if(e(two)==2)
+  if(one.y[1].uc)
   {
     f(one);
-    f(two);
-    return 0;
-  }
-  else if(one.y[3].uc>two.y[3].uc)
-  {
-    f(one);
-    f(two);
-    return 1;
-  }
-  else if(one.y[3].uc<two.y[3].uc)
-  {
-    f(one);
-    f(two);
-    return 0;
+    return two;
   }
   else
   {
-    return gt1(pp(one),pp(two));
-  }
-}
- 
-z gt(z one,z two)
-{
-  if(e(one)>e(two)||(e(one)==e(two)&&gt1(c(one),c(two))))
-  {
     f(two);
-    one.y[1].uc=1;
     return one;
   }
+}
+
+z nu(z value)
+{
+  if(e(value)==2)
+  {
+    value.y[1].uc=1;
+  }
   else
   {
-    f(one);
-    two.y[1].uc=0;
-    return two;
+    value.y[1].uc=0;
+  }
+  return value;
+}
+
+z no(z value)
+{
+  if(value.y[1].uc)
+  {
+    value.y[1].uc=0;
+  }
+  else
+  {
+    value.y[1].uc=1;
+  }
+  return value;
+}
+
+z rd1(z fun,z stack)
+{
+  if(e(stack)==3)
+  {
+    return tp(stack);
+  }
+  else
+  {
+    z combined;
+    combined=fun.f2(tp(pp(c(stack))),tp(c(stack)));
+    stack=pp(pp(stack));
+    return rd1(fun,ps(combined,stack));
   }
 }
- 
+
+z rd(z fin,z fun,z stack)
+{
+  return rd1(fun,ps(fin,rv(stack)));
+}
+
+z tp(z stack)
+{
+  z result=stack.y[3];
+  f(stack);
+  return result;
+}
+
+z kp1(z fun,z stack,z result)
+{
+  if(e(stack)==2)
+  {
+    f(stack);
+    return result;
+  }
+  else
+  {
+    if(fun.f1(tp(c(stack))).uc)
+    {
+      result=ps(tp(c(stack)),result);
+    }
+    return kp1(fun,pp(stack),result);
+  }
+}
+
+z kp(z fun,z stack)
+{
+  return kp1(fun,rv(stack),n());
+}
+
 uc q1(z one,z two)
 {
   if(e(one)==2)
@@ -657,7 +487,7 @@ uc q1(z one,z two)
     }
   }
 }
- 
+
 z q(z one,z two)
 {
   if(e(one)==e(two)&&q1(one,c(two)))
@@ -670,6 +500,323 @@ z q(z one,z two)
     two.y[1].uc=0;
     return two;
   }
+}
+
+z dv1(z one,z two,z control,z compare,z result)
+{
+  if(e(two)==2)
+  {
+    f(one);
+    f(two);
+    f(control);
+    f(compare);
+    return result;
+  }
+  else
+  {
+    if(as(gt(ad(t(c(two)),c(compare)),c(one))))
+    {
+      two=p(two);
+      control=p(control);
+    }
+    else
+    {
+      compare=ad(compare,t(c(two)));
+      two=p(two);
+      result=ad(result,t(c(control)));
+      control=p(control);
+    }
+    return dv1(one,two,control,compare,result);
+  }
+}
+
+z dv2(z one,z two,z control)
+{
+  if(as(gt(t(c(two)),c(one))))
+  {
+    return dv1(one,p(two),p(control),n(),n());
+  }
+  else
+  {
+    z result;
+    result=dv2(one,u(twice(t(c(two))),c(two)),u(twice(t(c(control))),c(control)));
+    f(two);
+    f(control);
+    return result;
+  }
+}
+
+z dv(z one,z two)
+{
+  if(e(one)==2)
+  {
+    f(one);
+    f(two);
+    return n();
+  }
+  else
+  {
+    z val;
+    val.uc='1';
+    return dv2(one,u(two,n()),u(ps(val,n()),n()));
+  }
+}
+
+z twice(z number)
+{
+  z result;
+  result=ad(c(number),c(number));
+  f(number);
+  return result;
+}
+
+z mu1(z one,z two,z control,z compare,z result)
+{
+  if(e(two)==2)
+  {
+    f(one);
+    f(two);
+    f(control);
+    f(compare);
+    return result;
+  }
+  else
+  {
+    if(as(gt(ad(t(c(control)),c(compare)),c(one))))
+    {
+      control=p(control);
+      two=p(two);
+    }
+    else
+    {
+      compare=ad(compare,t(c(control)));
+      control=p(control);
+      result=ad(result,t(c(two)));
+      two=p(two);
+    }
+    return mu1(one,two,control,compare,result);
+  }
+}
+
+uc gt1(z one,z two)
+{
+  if(e(two)==2)
+  {
+    f(one);
+    f(two);
+    return 0;
+  }
+  else if(one.y[3].uc>two.y[3].uc)
+  {
+    f(one);
+    f(two);
+    return 1;
+  }
+  else if(one.y[3].uc<two.y[3].uc)
+  {
+    f(one);
+    f(two);
+    return 0;
+  }
+  else
+  {
+    return gt1(pp(one),pp(two));
+  }
+}
+
+z gt(z one,z two)
+{
+  if(e(one)>e(two)||(e(one)==e(two)&>1(c(one),c(two))))
+  {
+    f(two);
+    one.y[1].uc=1;
+    return one;
+  }
+  else
+  {
+    f(one);
+    two.y[1].uc=0;
+    return two;
+  }
+}
+
+z mu2(z one,z two,z control)
+{
+  if(as(gt(t(c(control)),c(one))))
+  {
+    return mu1(one,p(two),p(control),n(),n());
+  }
+  else
+  {
+    z result;
+    result=mu2(one,u(twice(t(c(two))),c(two)),u(twice(t(c(control))),c(control)));
+    f(two);
+    f(control);
+    return result;
+  }
+}
+
+z u(z one,z two)
+{
+  ul ex=e(one)+e(two)+3;
+  ul sz=size(ex);
+  ul i;
+  if(sz==size(e(two)))
+  {
+    two.y[1].uc=1;
+    two.y-=e(one)+1;
+    two.y[0]=one.y[0];
+    two.y[1].uc=1;
+    for(i=2;i<=e(one);++i)
+    {
+      two.y[i]=one.y[i];
+    }
+    two.y-=2;
+    two.y[0].ul=ex;
+    two.y[1].uc=1;
+    f(one);
+    return two;
+  }
+  else
+  {
+    z result;
+    result.y=(y)malloc((sz+1)*sizeof(z));
+    result.y+=sz-e(one)-e(two)-3;
+    result.y[0].ul=ex;
+    result.y[1].uc=1;
+    result.y+=2;
+    result.y[0]=one.y[0];
+    result.y[1].uc=1;
+    for(i=2;i<=e(one);++i)
+    {
+      result.y[i]=one.y[i];
+    }
+    result.y+=e(one)+1;
+    result.y[0]=two.y[0];
+    result.y[1].uc=1;
+    for(i=2;i<=e(two);++i)
+    {
+      result.y[i]=two.y[i];
+    }
+    result.y-=e(one)+1;
+    result.y-=2;
+    f(one);
+    f(two);
+    return result;
+  }
+}
+
+z mu(z one,z two)
+{
+  if(e(one)==2||e(two)==2)
+  {
+    f(one);
+    f(two);
+    return n();
+  }
+  else
+  {
+    z val;
+    val.uc='1';
+    return mu2(one,u(two,n()),u(ps(val,n()),n()));
+  }
+}
+
+z mp(z fun,z stack)
+{
+  stack.y[1].uc=1;
+  ul i;
+  for(i=3;i<=e(stack);++i)
+  {
+    stack.y[i]=fun.f1(stack.y[i]);
+  }
+  return stack;
+}
+
+z inc(z character)
+{
+  character.uc+=1;
+  return character;
+}
+
+z sb4(z value)
+{
+  if(e(value)==2)
+  {
+    return value;
+  }
+  else if(value.y[3].uc=='0')
+  {
+    return sb4(pp(value));
+  }
+  else
+  {
+    return value;
+  }
+}
+
+uc sb1(uc one,uc two,uc borrow)
+{
+  return one<two+borrow;
+}
+
+uc sb2(uc one,uc two,uc borrow)
+{
+  return (sb1(one,two,borrow)?one+'0'+10-two:one+'0'-two)-borrow;
+}
+
+z sb3(z one,z two,uc borrow,ul index1,ul index2)
+{
+  if(index2==2&&borrow==0)
+  {
+    f(two);
+    return one;
+  }
+  uc one1;
+  uc two1;
+  if(index1==2)
+  {
+    one1='0';
+  }
+  else
+  {
+    one1=one.y[index1].uc;
+    --index1;
+  }
+  if(index2==2)
+  {
+    two1='0';
+  }
+  else
+  {
+    two1=two.y[index2].uc;
+    --index2;
+  }
+  uc temp=sb2(one1,two1,borrow);
+  one.y[index1+1].uc=temp;
+  return sb3(one,two,sb1(one1,two1,borrow),index1,index2);
+}
+
+z sb(z one,z two)
+{
+  return sb4(sb3(one,two,0,e(one),e(two)));
+}
+
+z rv(z stack)
+{
+  stack.y[1].uc=1;
+  ul i;
+  z temp;
+  ul r=e(stack);
+  ul m=(r+2)/2;
+  for(i=3;i<=m;++i)
+  {
+    temp=stack.y[i];
+    stack.y[i]=stack.y[r];
+    stack.y[r]=temp;
+    --r;
+  }
+  return stack;
 }
 
 uc ad1(uc one,uc two,uc carry)
@@ -734,6 +881,85 @@ z ad4(z one,z two)
   return ad3(one,two,0,e(one),e(two));
 }
 
+uc as(z value)
+{
+  uc result=value.y[1].uc;
+  f(value);
+  return result;
+}
+
+z pp(z stack)
+{
+  ul sz=size(e(stack)-1);
+  if(sz<e(stack))
+  {
+    z result;
+    result.y=(y)malloc((sz+1)*sizeof(z));
+    result.y[0].ul=e(stack)-1;
+    result.y[1].uc=1;
+    result.y[2].ul=0;
+    ul i;
+    ++stack.y;
+    for(i=3;i<=e(result);++i)
+    {
+      result.y[i]=stack.y[i];
+    }
+    --stack.y;
+    f(stack);
+    return result;
+  }
+  else
+  {
+    stack.y[3].ul=0;
+    stack.y[2].uc=1;
+    stack.y[1].ul=e(stack)-1;
+    ++stack.y;
+    return stack;
+  }
+}
+
+uc lt1(z one,z two)
+{
+  if(e(one)==2)
+  {
+    f(one);
+    f(two);
+    return 0;
+  }
+  else if(one.y[3].uc<two.y[3].uc)
+  {
+    f(one);
+    f(two);
+    return 1;
+  }
+  else if(one.y[3].uc>two.y[3].uc)
+  {
+    f(one);
+    f(two);
+    return 0;
+  }
+  else
+  {
+    return lt1(pp(one),pp(two));
+  }
+}
+
+z lt(z one,z two)
+{
+  if(e(one)<e(two)||(e(one)==e(two)&<1(c(one),c(two))))
+  {
+    f(two);
+    one.y[1].uc=1;
+    return one;
+  }
+  else
+  {
+    f(one);
+    two.y[1].uc=0;
+    return two;
+  }
+}
+
 z ad(z one,z two)
 {
   if(as(lt(c(one),c(two))))
@@ -746,200 +972,47 @@ z ad(z one,z two)
   }
 }
 
-uc sb1(uc one,uc two,uc borrow)
+void displaySpace(z object)
 {
-  return one<two+borrow;
+  display(object);
+  printf(" ");
 }
 
-uc sb2(uc one,uc two,uc borrow)
-{
-  return (sb1(one,two,borrow)?one+'0'+10-two:one+'0'-two)-borrow;
-}
-
-z sb3(z one,z two,uc borrow,ul index1,ul index2)
-{
-  if(index2==2&&borrow==0)
-  {
-    f(two);
-    return one;
-  }
-  uc one1;
-  uc two1;
-  if(index1==2)
-  {
-    one1='0';
-  }
-  else
-  {
-    one1=one.y[index1].uc;
-    --index1;
-  }
-  if(index2==2)
-  {
-    two1='0';
-  }
-  else
-  {
-    two1=two.y[index2].uc;
-    --index2;
-  }
-  uc temp=sb2(one1,two1,borrow);
-  one.y[index1+1].uc=temp;
-  return sb3(one,two,sb1(one1,two1,borrow),index1,index2);
-}
-
-z sb4(z value)
-{
-  if(e(value)==2)
-  {
-    return value;
-  }
-  else if(value.y[3].uc=='0')
-  {
-    return sb4(pp(value));
-  }
-  else
-  {
-    return value;
-  }
-}
-
-z sb(z one,z two)
-{
-  return sb4(sb3(one,two,0,e(one),e(two)));
-}
-
-z twice(z number)
+z p(z pair)
 {
   z result;
-  result=ad(c(number),c(number));
-  f(number);
+  pair.y+=2;
+  ul jump=e(pair)+1;
+  pair.y+=jump;
+  result=c(pair);
+  pair.y-=jump;
+  pair.y-=2;
+  f(pair);
   return result;
 }
 
-z mu1(z one,z two,z control,z compare,z result)
+z t(z pair)
 {
-  if(e(two)==2)
-  {
-    f(one);
-    f(two);
-    f(control);
-    f(compare);
-    return result;
-  }
-  else
-  {
-    if(as(gt(ad(t(c(control)),c(compare)),c(one))))
-    {
-      control=p(control);
-      two=p(two);
-    }
-    else
-    {
-      compare=ad(compare,t(c(control)));
-      control=p(control);
-      result=ad(result,t(c(two)));
-      two=p(two);
-    }
-    return mu1(one,two,control,compare,result);
-  }
+  z result;
+  pair.y+=2;
+  result=c(pair);
+  pair.y-=2;
+  f(pair);
+  return result;
 }
 
-z mu2(z one,z two,z control)
+z c(z object)
 {
-  if(as(gt(t(c(control)),c(one))))
+  ul sz=size(e(object));
+  z result;
+  result.y=(y)malloc((sz+1)*sizeof(z));
+  result.y+=sz-e(object);
+  ul i;
+  for(i=0;i<=e(object);++i)
   {
-    return mu1(one,p(two),p(control),n(),n());
+    result.y[i]=object.y[i];
   }
-  else
-  {
-    z result;
-    result=mu2(one,u(twice(t(c(two))),c(two)),u(twice(t(c(control))),c(control)));
-    f(two);
-    f(control);
-    return result;
-  }
-}
-
-z mu(z one,z two)
-{
-  if(e(one)==2||e(two)==2)
-  {
-    f(one);
-    f(two);
-    return n();
-  }
-  else
-  {
-    z val;
-    val.uc='1';
-    return mu2(one,u(two,n()),u(ps(val,n()),n()));
-  }
-}
- 
-z dv1(z one,z two,z control,z compare,z result)
-{
-  if(e(two)==2)
-  {
-    f(one);
-    f(two);
-    f(control);
-    f(compare);
-    return result;
-  }
-  else
-  {
-    if(as(gt(ad(t(c(two)),c(compare)),c(one))))
-    {
-      two=p(two);
-      control=p(control);
-    }
-    else
-    {
-      compare=ad(compare,t(c(two)));
-      two=p(two);
-      result=ad(result,t(c(control)));
-      control=p(control);
-    }
-    return dv1(one,two,control,compare,result);
-  }
-}
-
-z dv2(z one,z two,z control)
-{
-  if(as(gt(t(c(two)),c(one))))
-  {
-    return dv1(one,p(two),p(control),n(),n());
-  }
-  else
-  {
-    z result;
-    result=dv2(one,u(twice(t(c(two))),c(two)),u(twice(t(c(control))),c(control)));
-    f(two);
-    f(control);
-    return result;
-  }
-}
-
-z dv(z one,z two)
-{
-  if(e(one)==2)
-  {
-    f(one);
-    f(two);
-    return n();
-  }
-  else
-  {
-    z val;
-    val.uc='1';
-    return dv2(one,u(two,n()),u(ps(val,n()),n()));
-  }
-}
-
-z md(z one,z two)
-{
-  return sb(one,mu(two,dv(c(one),c(two))));
+  return result;
 }
 
 void display1(z object)
@@ -963,11 +1036,11 @@ void display1(z object)
     for(i=3;i<=e(object);++i)
     {
       printf("%c",object.y[i].uc);
-    } 
+    }
     f(object);
   }
 }
- 
+
 void display(z object)
 {
   if(object.y[1].uc==0)
@@ -976,260 +1049,187 @@ void display(z object)
   }
   display1(object);
 }
- 
+
 void displayLine(z object)
 {
   display(object);
   printf("\n");
 }
- 
-void displaySpace(z object)
+
+void f(z stack)
 {
-  display(object);
-  printf(" ");
+  ul sz=size(e(stack));
+  stack.y-=sz-e(stack);
+  free(stack.y);
 }
- 
-z identity(z object)
+
+ul e(z object)
 {
-  return object;
+  return object.y[0].ul;
 }
- 
-z inc(z character)
+
+ul size(ul extent)
 {
-  character.uc+=1;
-  return character;
+  return ((extent-1)/block+1)*block;
 }
- 
-z dec(z character)
+
+z ps(z object,z stack)
 {
-  character.uc-=1;
-  return character;
+  ul sz=size(e(stack)+1);
+  if(e(stack)+block==sz)
+  {
+    z result;
+    result.y=(y)malloc((sz+1)*sizeof(z));
+    result.y+=sz-e(stack)-1;
+    result.y[0].ul=e(stack)+1;
+    result.y[1].uc=1;
+    result.y[2].ul=0;
+    result.y[3]=object;
+    ++result.y;
+    ul i;
+    for(i=3;i<=e(stack);++i)
+    {
+    result.y[i]=stack.y[i];
+    }
+    --result.y;
+    f(stack);
+    return result;
+  }
+  else
+  {
+    --stack.y;
+    stack.y[0].ul=stack.y[1].ul+1;
+    stack.y[1].uc=1;
+    stack.y[2].ul=0;
+    stack.y[3]=object;
+    return stack;
+  }
 }
- 
-z notB(z character)
-{
-  character.uc=character.uc!='3';
-  return character;
-}
- 
-z tru(z value)
+
+z n()
 {
   z result;
-  result.uc=1;
-  f(value);
+  result.y=(y)malloc((block+1)*sizeof(z));
+  result.y+=block-2;
+  result.y[0].ul=2;
+  result.y[1].uc=1;
+  result.y[2].ul=0;
   return result;
 }
- 
+
 int main()
 {
   z val;
-  z fun;
-  z fun2;
-  z stack;
-  z stack2;
-  z stack3;
-  stack=n();
+  z sta1;
+  z sta2;
+  z sta3;
+  z sta4;
+  sta1=n();
+  val.uc='1';
+  sta1=ps(val,sta1);
+  val.uc='2';
+  sta1=ps(val,sta1);
   val.uc='3';
-  stack=ps(val,stack);  
-  val.uc='2';
-  stack=ps(val,stack);
-  val.uc='1';
-  stack=ps(val,stack);
-  val.uc='3';
-  stack=ps(val,stack);
-  val.uc='2';
-  stack=ps(val,stack);
-  val.uc='1';
-  stack=ps(val,stack);
-  val.uc='3';
-  stack=ps(val,stack);
-  val.uc='2';
-  stack=ps(val,stack);
-  val.uc='1';
-  stack=ps(val,stack);
-  val.uc='3';
-  stack=ps(val,stack);
-  val.uc='2';
-  stack=ps(val,stack);
-  val.uc='1';
-  stack=ps(val,stack);
-  val.uc='3';
-  stack=ps(val,stack);
-  val.uc='2';
-  stack=ps(val,stack);
-  val.uc='1';
-  stack=ps(val,stack);
-  displayLine(c(stack));
-  stack2=c(stack);
-  fun.f1=&identity;
-  stack=mp(fun,stack);
-  stack=mp(fun,stack);
-  fun.f1=&inc;
-  stack=mp(fun,stack);
-  displayLine(c(stack));
-  printf("  sb1sb2\n");
-  printf("%d%c\n",sb1('0','9',1),sb2('0','9',1));
-  printf("%d%c\n",sb1('9','9',1),sb2('9','9',1));
-  printf("%d%c\n",sb1('9','8',1),sb2('9','8',1));
-  printf("%d%c\n",sb1('0','9',0),sb2('0','9',0));
-  printf("%d%c\n",sb1('9','9',0),sb2('9','9',0));
-  printf("%d%c\n",sb1('9','8',0),sb2('9','8',0));
-  printf("  sb\n");
-  displayLine(sb(c(stack2),c(stack2)));
-  displayLine(sb(c(stack2),pp(rv(c(stack2)))));
-  printf("  ad1ad2\n");
-  printf("%d%c\n",ad1('6','8',0),ad2('6','8',0));
-  printf("%d%c\n",ad1('9','0',1),ad2('9','0',1));
-  printf("  ad\n");
-  displayLine(ad(c(stack2),c(stack2)));
-  displayLine(ad(c(stack2),pp(rv(c(stack2)))));
-
-  val.uc='2';
-  stack3=ps(val,n());
-  val.uc='0';
-  stack3=ps(val,stack3);
-  val.uc='1';
-  stack3=ps(val,stack3);
-  displayLine(c(stack3));
-  displayLine(ad(c(stack3),c(stack3)));
-
-  printf("  dv\n");
-  displayLine(dv(n(),c(stack2)));
-  displayLine(dv(c(stack2),c(stack2)));
-  displayLine(dv(c(stack2),c(stack3)));
-  displayLine(dv(c(stack3),c(stack2)));
-  printf("  md\n");
-  displayLine(md(c(stack2),c(stack3)));
-  printf("  mu\n");
-  displayLine(mu(n(),c(stack2)));
-  displayLine(mu(c(stack2),n()));
-  displayLine(mu(c(stack2),c(stack2)));
-  printf("  mudvmd\n");
-  displayLine(ad(md(c(stack2),c(stack3)),mu(c(stack3),dv(c(stack2),c(stack3)))));
-  printf("  lt\n");
-  displayLine(lt(c(stack2),c(stack)));
-  displayLine(lt(c(stack),c(stack2)));
-  displayLine(lt(c(stack2),rv(pp(c(stack)))));
-  displayLine(lt(rv(pp(c(stack))),c(stack2)));
-  printf("  gt\n");
-  displayLine(gt(c(stack2),c(stack)));
-  displayLine(gt(c(stack),c(stack2)));
-  displayLine(gt(c(stack2),rv(pp(c(stack)))));
-  displayLine(gt(rv(pp(c(stack))),c(stack2)));
-  fun.f1=&notB;
-  stack=kp(fun,stack);
-  stack=kp(fun,stack);
-  displayLine(c(stack));
-  fun2.f2=&ps;
-  stack=rd(n(),fun2,stack);
-  stack=rd(n(),fun2,stack);
-  displayLine(c(stack));
- 
-  stack=pp(stack);
-  displayLine(c(stack));
-  stack=rv(stack);
-  displayLine(c(stack));
-  stack=pp(stack);
-  displayLine(c(stack));
-  stack=rv(stack);
-  displayLine(c(stack));
-  stack=pp(stack);
-  displayLine(c(stack));
-  stack=rv(stack);
-  displayLine(c(stack));
-  stack=pp(stack);
-  displayLine(c(stack));
-  stack=rv(stack);
-  displayLine(c(stack));
-  stack=pp(stack);
-  displayLine(c(stack));
-  stack=rv(stack);
-  displayLine(c(stack));
-  stack=pp(stack);
-  displayLine(c(stack));
-  stack=rv(stack);
-  displayLine(c(stack));
-  stack=pp(stack);
-  displayLine(c(stack));
-  stack=rv(stack);
-  displayLine(c(stack));
-  stack=pp(stack);
-  displayLine(c(stack));
-  stack=rv(stack);
-  displayLine(c(stack));
-  stack=pp(stack);
-  displayLine(c(stack));
-  stack=rv(stack);
-  displayLine(c(stack));
-  stack=pp(stack);
-  displayLine(c(stack));
-  stack=rv(stack);
-  displayLine(c(stack));
- 
-  f(stack);
-  stack=c(stack2);
-  f(stack2);
-  stack2=u(u(c(stack),c(stack)),u(u(c(stack),c(stack)),u(u(c(stack),c(stack)),n())));
-  displayLine(c(stack2));
-  displayLine(nu(c(stack2)));
-  fun.f1=&identity;
-  stack2=m(fun,stack2);
-  stack2=m(fun,stack2);
-  fun.f1=&tru;
-  stack2=k(fun,stack2);
-  stack2=k(fun,stack2);
-  fun2.f2=&u;
-  stack2=r(n(),fun2,stack2);
-  stack2=r(n(),fun2,stack2);
-  stack2=v(stack2);
-  stack2=p(stack2);
-  stack2=t(stack2);
-  stack2=p(stack2);
-  printf("%d\n",as(no(c(stack2))));
-  displayLine(c(stack2));
- 
-  printf("  nu\n");
-  displayLine(nu(n()));
-  displayLine(nu(no(n())));
-  displayLine(nu(c(stack2)));
-  displayLine(nu(no(c(stack2))));
- 
-  printf("  pr\n");
-  displayLine(pr(n()));
-  displayLine(pr(no(c(stack2))));
-  displayLine(pr(u(c(stack2),c(stack2))));
-  displayLine(pr(no(u(c(stack2),c(stack2)))));
- 
-  printf("  a\n");
-  displayLine(a(no(n()),no(n())));
-  displayLine(a(no(n()),n()));
-  displayLine(a(n(),no(n())));
-  displayLine(a(n(),n()));
-  
-  printf("  o\n");
-  displayLine(o(no(n()),no(n())));
-  displayLine(o(no(n()),n()));
-  displayLine(o(n(),no(n())));
-  displayLine(o(n(),n()));
- 
-  printf("  x\n");
-  displayLine(x(no(n()),no(n())));
-  displayLine(x(no(n()),n()));
-  displayLine(x(n(),no(n())));
-  displayLine(x(n(),n()));
- 
-  printf("  q\n");
-  displayLine(q(n(),n()));
-  displayLine(q(n(),c(stack2)));
-  displayLine(q(c(stack2),n()));
-  displayLine(q(c(stack2),c(stack2)));
-  printf("  q\n");
-  displayLine(q(u(c(stack2),c(stack2)),c(stack2)));
-  displayLine(q(c(stack2),u(c(stack2),c(stack2))));
-  val.uc='x';
-  displayLine(q(u(c(stack2),rv(ps(val,pp(c(stack2))))),u(c(stack2),rv(c(stack2)))));
-  displayLine(q(u(c(stack2),rv(c(stack2))),u(c(stack2),rv(ps(val,pp(c(stack2)))))));
-
-  f(stack);
+  sta1=ps(val,sta1);
+  val.f1=&inc;
+  sta1=kp(val,mp(val,sta1));
+  val.f2=&ps;
+  sta2=rd(n(),val,rv(c(sta1)));
+  printf("(ad) ");
+  displaySpace(c(sta1));
+  displaySpace(c(sta2));
+  printf("= ");
+  displayLine(ad(c(sta1),c(sta2)));
+  printf("(sb) ");
+  displaySpace(c(sta1));
+  displaySpace(c(sta2));
+  printf("= ");
+  displayLine(sb(c(sta1),c(sta2)));
+  printf("(mu) ");
+  displaySpace(c(sta1));
+  displaySpace(c(sta2));
+  printf("= ");
+  displayLine(mu(c(sta1),c(sta2)));
+  printf("(dv) ");
+  displaySpace(c(sta1));
+  displaySpace(c(sta2));
+  printf("= ");
+  displayLine(dv(c(sta1),c(sta2)));
+  printf("(md) ");
+  displaySpace(c(sta1));
+  displaySpace(c(sta2));
+  printf("= ");
+  displayLine(md(c(sta1),c(sta2)));
+  printf("(lt) ");
+  displaySpace(c(sta1));
+  displaySpace(c(sta2));
+  printf("= ");
+  displayLine(lt(c(sta1),c(sta2)));
+  printf("(gt) ");
+  displaySpace(c(sta1));
+  displaySpace(c(sta2));
+  printf("= ");
+  displayLine(gt(c(sta1),c(sta2)));
+  printf("(q) ");
+  displaySpace(c(sta1));
+  displaySpace(c(sta2));
+  printf("= ");
+  displayLine(q(c(sta1),c(sta2)));
+  printf("(no) ");
+  displaySpace(c(sta1));
+  printf("= ");
+  displayLine(no(c(sta1)));
+  printf("(nu) ");
+  displaySpace(c(sta1));
+  printf("= ");
+  displayLine(nu(c(sta1)));
+  sta3=n();
+  sta3=u(c(sta2),sta3);
+  sta3=u(c(sta1),sta3);
+  sta4=v(c(sta3));
+  val.f2=&u;
+  sta4=r(n(),val,sta4);
+  val.f1=&twice;
+  sta4=k(val,sta4);
+  sta4=m(val,sta4);
+  printf("(pr) ");
+  displaySpace(c(sta3));
+  printf("= ");
+  displayLine(pr(c(sta3)));
+  printf("(q) ");
+  displaySpace(c(sta3));
+  displaySpace(c(sta4));
+  printf("= ");
+  displayLine(q(c(sta3),c(sta4)));
+  printf("(a) ");
+  displaySpace(c(sta1));
+  displaySpace(c(sta2));
+  printf("= ");
+  displayLine(a(c(sta1),c(sta2)));
+  printf("(o) ");
+  displaySpace(c(sta1));
+  displaySpace(c(sta2));
+  printf("= ");
+  displayLine(o(c(sta1),c(sta2)));
+  printf("(x) ");
+  displaySpace(c(sta1));
+  displaySpace(c(sta2));
+  printf("= ");
+  displayLine(x(c(sta1),c(sta2)));
+  printf("(a) (no) ");
+  displaySpace(c(sta1));
+  displaySpace(c(sta2));
+  printf("= ");
+  displayLine(a(no(c(sta1)),c(sta2)));
+  printf("(o) (no) ");
+  displaySpace(c(sta1));
+  displaySpace(c(sta2));
+  printf("= ");
+  displayLine(o(no(c(sta1)),c(sta2)));
+  printf("(x) (no) ");
+  displaySpace(c(sta1));
+  displaySpace(c(sta2));
+  printf("= ");
+  displayLine(x(no(c(sta1)),c(sta2)));
   return 0;
 }
