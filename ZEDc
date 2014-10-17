@@ -107,6 +107,8 @@ z rv(z stack);
 
 z kp1(z fun,z stack,z result);
 
+ul sz(z number);
+
 z c(z object);
 
 z tp(z stack);
@@ -209,22 +211,106 @@ z o(z one,z two);
 
 z x(z one,z two);
 
+z fm1(z number);
+
+z uli(ul number);
+
 z rr(ul count,z value);
 
 z rr1(ul count,z value,z collect);
 
+z fm2(ul zeros,z number);
 
+z fm3(ul zeros,z number,z zero);
+
+z fm4(z number);
+
+z fm5(z number,z zero);
+
+z fm6(ul count);
+
+void nmSpace(z number);
+
+void nm(z number);
+
+void nmLine(z number);
+
+
+
+void nmLine(z number)
+{
+  nm(number);
+  printf("\n");
+}  
+
+void nm(z number)
+{
+    ul i;
+    for(i=3;i<=e(number);++i)
+    {
+      printf("%c",number.y[i].uc);
+    } 
+    f(number);
+}  
+
+void nmSpace(z number)
+{
+  nm(number);
+  printf(" ");
+}  
+
+z fm6(ul count)
+{
+  return rr(count,uli(1));
+}  
+
+z fm5(z number,z zero)
+{
+  if(as(nu(c(number))))
+  {
+    return number;
+  }
+  else
+  {
+    z temp;
+    temp=ps(tp(c(number)),c(zero));
+    return u(temp,fm5(pp(number),zero));
+  }
+}  
+
+z fm4(z number)
+{
+  return fm5(number,n());
+}  
+
+z fm3(ul zeros, z number,z zero)
+{
+  if(zeros==0)
+  {
+    return rv(number);
+  }
+  else
+  {
+    return fm3(zeros-1,ps(zero,number),zero);
+  }
+}  
+
+z fm2(ul zeros,z number)
+{
+  z zero;
+  zero.uc='0';
+  return fm3(zeros,rv(number),zero);
+}  
 
 z rr1(ul count,z value,z collect)
 {
   if(count==0)
   {
-    f(value);
     return collect;
   }
   else
   {
-    return rr1(count-1,value,ps(c(value),collect));
+    return rr1(count-1,value,ps(value,collect));
   }
 }    
 
@@ -232,6 +318,60 @@ z rr(ul count,z value)
 {
   return rr1(count,value,n());
 }    
+
+z uli(ul number)
+{
+  z value;
+  value.ul=number;
+  return value;
+}  
+
+z fm1(z number)
+{
+  z table;
+  table=rr(57,uli(0));
+  z multiplier;
+  z character;
+  table.y['0']=n();
+  character.uc='1';
+  multiplier=n();
+  multiplier=ps(character,multiplier);
+  table.y['1']=mu(multiplier,c(number));
+  character.uc='2';
+  multiplier=n();
+  multiplier=ps(character,multiplier);
+  table.y['2']=mu(multiplier,c(number));
+  character.uc='3';
+  multiplier=n();
+  multiplier=ps(character,multiplier);
+  table.y['3']=mu(multiplier,c(number));
+  character.uc='4';
+  multiplier=n();
+  multiplier=ps(character,multiplier);
+  table.y['4']=mu(multiplier,c(number));
+  character.uc='5';
+  multiplier=n();
+  multiplier=ps(character,multiplier);
+  table.y['5']=mu(multiplier,c(number));
+  character.uc='6';
+  multiplier=n();
+  multiplier=ps(character,multiplier);
+  table.y['6']=mu(multiplier,c(number));
+  character.uc='7';
+  multiplier=n();
+  multiplier=ps(character,multiplier);
+  table.y['7']=mu(multiplier,c(number));
+  character.uc='8';
+  multiplier=n();
+  multiplier=ps(character,multiplier);
+  table.y['8']=mu(multiplier,c(number));
+  character.uc='9';
+  multiplier=n();
+  multiplier=ps(character,multiplier);
+  table.y['9']=mu(multiplier,c(number));
+  f(number);
+  return table;
+}  
 
 z x(z one,z two)
 {
@@ -245,7 +385,7 @@ z x(z one,z two)
     f(one);
     return two;
   }
-}   
+}  
 
 z o(z one,z two)
 {
@@ -290,7 +430,7 @@ z pr(z value)
 
 z m1(z fun,z list,z result)
 {
-  if(e(list)==2)
+  if(sz(list)==0)
   {
     f(list);
     return result;
@@ -309,7 +449,7 @@ z m(z fun,z list)
 
 z k1(z fun,z list,z result)
 {
-  if(e(list)==2)
+  if(sz(list)==0)
   {
     f(list);
     return result;
@@ -336,7 +476,7 @@ z r1(z fun,z list)
 {
   z rest;
   rest=p(c(list));
-  if(e(rest)==2)
+  if(sz(rest)==0)
   {
     f(rest);
     return t(list);
@@ -356,7 +496,7 @@ z r(z fin,z fun,z list)
 
 z v1(z list,z result)
 {
-  if(e(list)==2)
+  if(sz(list)==0)
   {
     f(list);
     return result;
@@ -375,7 +515,7 @@ z v(z list)
 
 z nu(z value)
 {
-  if(e(value)==2)
+  if(sz(value)==0)
   {
     value.y[1].uc=1;
   }
@@ -401,7 +541,7 @@ z no(z value)
 
 uc q1(z one,z two)
 {
-  if(e(one)==2)
+  if(sz(one)==0)
   {
     f(one);
     f(two);
@@ -458,7 +598,7 @@ uc q1(z one,z two)
 
 z q(z one,z two)
 {
-  if(e(one)==e(two)&&q1(one,c(two)))
+  if(sz(one)==sz(two)&&q1(one,c(two)))
   {
     two.y[1].uc=1;
     return two;
@@ -477,7 +617,7 @@ z md(z one,z two)
 
 z dv1(z one,z two,z control,z compare,z result)
 {
-  if(e(two)==2)
+  if(sz(two)==0)
   {
     f(one);
     f(two);
@@ -521,7 +661,7 @@ z dv2(z one,z two,z control)
 
 z dv(z one,z two)
 {
-  if(e(one)==2)
+  if(sz(one)==0)
   {
     f(one);
     f(two);
@@ -545,7 +685,7 @@ z twice(z number)
 
 z mu1(z one,z two,z control,z compare,z result)
 {
-  if(e(two)==2)
+  if(sz(two)==0)
   {
     f(one);
     f(two);
@@ -573,7 +713,7 @@ z mu1(z one,z two,z control,z compare,z result)
 
 uc gt1(z one,z two)
 {
-  if(e(two)==2)
+  if(sz(two)==0)
   {
     f(one);
     f(two);
@@ -599,7 +739,7 @@ uc gt1(z one,z two)
 
 z gt(z one,z two)
 {
-  if(e(one)>e(two)||(e(one)==e(two)&&gt1(c(one),c(two))))
+  if(sz(one)>sz(two)||(sz(one)==sz(two)&&gt1(c(one),c(two))))
   {
     f(two);
     one.y[1].uc=1;
@@ -681,7 +821,7 @@ z u(z one,z two)
 
 z mu(z one,z two)
 {
-  if(e(one)==2||e(two)==2)
+  if(sz(one)==0||sz(two)==0)
   {
     f(one);
     f(two);
@@ -697,7 +837,7 @@ z mu(z one,z two)
 
 z sb4(z value)
 {
-  if(e(value)==2)
+  if(sz(value)==0)
   {
     return value;
   }
@@ -831,11 +971,11 @@ uc as(z value)
   uc result=value.y[1].uc;
   f(value);
   return result;
-} 
+}  
 
 uc lt1(z one,z two)
 {
-  if(e(one)==2)
+  if(sz(one)==0)
   {
     f(one);
     f(two);
@@ -861,7 +1001,7 @@ uc lt1(z one,z two)
 
 z lt(z one,z two)
 {
-  if(e(one)<e(two)||(e(one)==e(two)&&lt1(c(one),c(two))))
+  if(sz(one)<sz(two)||(sz(one)==sz(two)&&lt1(c(one),c(two))))
   {
     f(two);
     one.y[1].uc=1;
@@ -953,7 +1093,7 @@ void displaySpace(z object)
 
 z rd1(z fun,z stack)
 {
-  if(e(stack)==3)
+  if(sz(stack)==1)
   {
     return tp(stack);
   }
@@ -1022,9 +1162,14 @@ z c(z object)
   return result;
 }  
 
+ul sz(z number)
+{
+  return e(number)-2;
+}  
+
 z kp1(z fun,z stack,z result)
 {
-  if(e(stack)==2)
+  if(sz(stack)==0)
   {
     f(stack);
     return result;
@@ -1254,14 +1399,33 @@ int main()
   displaySpace(c(sta2));
   printf("= ");
   displayLine(x(no(c(sta1)),c(sta2)));
-  printf("(33) (rr) 333 ");
-  displaySpace(n());
+  printf("('0') (fm1) ");
+  displaySpace(c(sta2));
   printf("= ");
-  sta5=rr(333,n());
-  displayLine(c(sta5.y[33]));
-  f(sta5.y[33]);
-  sta5.y[33]=c(sta2);
-  printf("(33) sta5 = ");
-  displayLine(c(sta5.y[33]));
+  sta5=fm1(c(sta2));
+  displayLine(c(sta5.y['0']));
+  printf("('9') (fm1) ");
+  displaySpace(c(sta2));
+  printf("= ");
+  displayLine(c(sta5.y['9']));
+  printf("(fm2) 10 ");
+  displaySpace(c(sta2));
+  printf("= ");
+  displayLine(fm2(10,c(sta2)));
+  printf("(sz) ");
+  displaySpace(c(sta2));
+  printf("= %llu\n",sz(sta2));
+  printf("(fm4) ");
+  displaySpace(c(sta2));
+  printf("= ");
+  displayLine(fm4(c(sta2)));
+  ul temp=10000;
+  printf("(fm6) %llu = <array of ones>\n",temp);
+  fm6(temp);
+  printf("(nm) ");
+  displaySpace(c(sta2));
+  printf("= ");
+  nmSpace(c(sta2));
+  nmLine(c(sta2));
   return 0;
 } 
