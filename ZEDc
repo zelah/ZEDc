@@ -235,7 +235,24 @@ void nm(z number);
 
 void nmLine(z number);
 
+z fm7(z small,z table);
 
+
+
+z fm7(z small,z table)
+{
+  if(as(nu(c(small))))
+  {
+    f(table);
+    return small;
+  }
+  else
+  {
+    z temp;
+    temp=table.y[tp(t(c(small))).uc];
+    return u(temp,fm7(p(small),table));
+  }
+}  
 
 void nmLine(z number)
 {
@@ -1427,5 +1444,11 @@ int main()
   printf("= ");
   nmSpace(c(sta2));
   nmLine(c(sta2));
+  printf("(fm7) (fm4) ");
+  displaySpace(c(sta2));
+  printf("(fm1) ");
+  displaySpace(c(sta2));
+  printf("= ");
+  displayLine(fm7(fm4(c(sta2)),c(sta5)));
   return 0;
 } 
