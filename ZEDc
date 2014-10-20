@@ -237,7 +237,75 @@ void nmLine(z number);
 
 z fm7(z small,z table);
 
+z fm(z one,z two);
 
+z fm11(z small,z large);
+
+z fm8(z result,z control);
+
+z fm9(z result,z control);
+
+z fm10(z result,z control,z a1,z a2);
+
+
+
+z fm10(z result,z control,z a1,z a2)
+{
+  if(as(nu(c(control))))
+  {
+    f(result);
+    f(control);
+    return u(v(a1),rv(a2));
+  }
+  else if(as(nu(pp(c(control)))))
+  {
+    return fm10(n(),n(),u(t(result),a1),ps(tp(control),a2));
+  }
+  else
+  {
+    z one;
+    z two;
+    one=ad(fm2(tp(pp(c(control))).ul,t(c(result))),t(p(c(result))));
+two=uli(tp(c(control)).ul+tp(pp(c(control))).ul);
+return fm10(p(p(result)),pp(pp(control)),u(one,a1),ps(two,a2));
+  }
+}  
+
+z fm9(z result,z control)
+{
+  return fm10(result,control,n(),n());
+}  
+
+z fm8(z result,z control)
+{
+  if(as(nu(pp(c(control)))))
+  {
+    f(control);
+    return t(result);
+  }
+  else
+  {
+    z one;
+    z two;
+    one=fm9(result,control);
+    two=fm8(t(c(one)),p(c(one)));
+    f(one);
+    return two;
+  }
+}  
+
+z fm11(z small,z large)
+{
+  ul s=sz(small);
+  return fm8(fm7(fm4(small),fm1(large)),fm6(s));
+}  
+
+z fm(z one,z two)
+{
+  z small;
+  small=lt(c(one),c(two));
+  return fm11(small,gt(one,two));
+}  
 
 z fm7(z small,z table)
 {
@@ -1450,5 +1518,10 @@ int main()
   displaySpace(c(sta2));
   printf("= ");
   displayLine(fm7(fm4(c(sta2)),c(sta5)));
+  printf("(fm) ");
+  nmSpace(c(sta1));
+  nmSpace(c(sta2));
+  printf("= ");
+  nmLine(fm(c(sta1),c(sta2)));
   return 0;
 } 
