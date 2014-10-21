@@ -344,7 +344,7 @@ z fm7(z small,z table)
   else
   {
     z temp;
-    temp=table.y[tp(t(c(small))).uc];
+    temp=c(table.y[tp(t(c(small))).uc]);
     return u(temp,fm7(p(small),table));
   }
 }  
@@ -860,7 +860,6 @@ int main()
 {
   z one;
   one=ps(uci('1'),ps(uci('2'),ps(uci('3'),n())));
-  //nmLine(sq(sq(sq(sq(c(one))))));
-  nmLine(sq(c(one)));
+  nmLine(sq(sq(sq(sq(c(one))))));
   return 0;
 }  
