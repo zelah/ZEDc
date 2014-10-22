@@ -131,7 +131,7 @@ z tp(z stack);
 
 z u(z one,z two);
 
-z uli(ul number);
+z fm1(z number);
 
 z rr(ul count,z value);
 
@@ -163,6 +163,8 @@ z fm7(z small,z table);
 
 z fm6(ul count);
 
+z uli(ul number);
+
 z fm8(z result,z control);
 
 z fm9(z result,z control);
@@ -183,27 +185,7 @@ void nmLine(z number);
 
 void nm(z number);
 
-z fm1(z number);
 
-
-
-z fm1(z number)
-{
-  z table;
-  table=rr(57,uci('0'));
-  table.y['0']=n();
-  table.y['1']=mu(ps(uci('1'),n()),c(number));
-  table.y['2']=mu(ps(uci('2'),n()),c(number));
-  table.y['3']=mu(ps(uci('3'),n()),c(number));
-  table.y['4']=mu(ps(uci('4'),n()),c(number));
-  table.y['5']=mu(ps(uci('5'),n()),c(number));
-  table.y['6']=mu(ps(uci('6'),n()),c(number));
-  table.y['7']=mu(ps(uci('7'),n()),c(number));
-  table.y['8']=mu(ps(uci('8'),n()),c(number));
-  table.y['9']=mu(ps(uci('9'),n()),c(number));
-  f(number);
-  return table;
-}  
 
 void nm(z number)
 {
@@ -317,6 +299,13 @@ z fm8(z result,z control)
     f(one);
     return two;
   }
+}  
+
+z uli(ul number)
+{
+  z value;
+  value.ul=number;
+  return value;
 }  
 
 z fm6(ul count)
@@ -531,11 +520,22 @@ z rr(ul count,z value)
   return rr1(count,value,n());
 }    
 
-z uli(ul number)
+z fm1(z number)
 {
-  z value;
-  value.ul=number;
-  return value;
+  z table;
+  table=rr(57,uci('0'));
+  table.y['0']=n();
+  table.y['1']=mu(ps(uci('1'),n()),c(number));
+  table.y['2']=mu(ps(uci('2'),n()),c(number));
+  table.y['3']=mu(ps(uci('3'),n()),c(number));
+  table.y['4']=mu(ps(uci('4'),n()),c(number));
+  table.y['5']=mu(ps(uci('5'),n()),c(number));
+  table.y['6']=mu(ps(uci('6'),n()),c(number));
+  table.y['7']=mu(ps(uci('7'),n()),c(number));
+  table.y['8']=mu(ps(uci('8'),n()),c(number));
+  table.y['9']=mu(ps(uci('9'),n()),c(number));
+  f(number);
+  return table;
 }  
 
 z u(z one,z two)
@@ -764,7 +764,7 @@ z fm(z one,z two)
   z small;
   small=lt(c(one),c(two));
   return fm11(small,gt(one,two));
-} 
+}  
 
 z sq(z number)
 {
@@ -859,7 +859,7 @@ z uci(uc character)
 int main()
 {
   z one;
-  one=ps(uci('1'),ps(uci('2'),ps(uci('3'),n())));
+  one=ps(uci('1'),ps(uci('2'),ps(uci('3'),ps(uci('4'),ps(uci('5'),n())))));
   nmLine(sq(sq(sq(sq(c(one))))));
   return 0;
 }  
