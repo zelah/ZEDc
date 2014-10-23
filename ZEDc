@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
  
 typedef union z z;
 union z
@@ -87,9 +88,11 @@ typedef z (*f19)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f20)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 ul const block=1024;
 
-z uci(uc character);
+z number(ch str[],int len);
 
 z n();
+
+z uci(uc character);
 
 z ps(z object,z stack);
 
@@ -99,11 +102,9 @@ ul size(ul extent);
 
 void f(z stack);
 
-z c(z object);
-
-z sq(z number);
-
 z fm(z one,z two);
+
+z c(z object);
 
 z lt(z one,z two);
 
@@ -759,21 +760,6 @@ z lt(z one,z two)
   }
 }  
 
-z fm(z one,z two)
-{
-  z small;
-  small=lt(c(one),c(two));
-  return fm11(small,gt(one,two));
-}  
-
-z sq(z number)
-{
-  z result;
-  result=fm(c(number),c(number));
-  f(number);
-  return result;
-}  
-
 z c(z object)
 {
   ul sz=size(e(object));
@@ -786,6 +772,13 @@ z c(z object)
     result.y[i]=object.y[i];
   }
   return result;
+}  
+
+z fm(z one,z two)
+{
+  z small;
+  small=lt(c(one),c(two));
+  return fm11(small,gt(one,two));
 }  
 
 void f(z stack)
@@ -838,6 +831,13 @@ z ps(z object,z stack)
   }
 }  
 
+z uci(uc character)
+{
+  z val;
+  val.uc=character;
+  return val;
+}  
+
 z n()
 {
   z result;
@@ -849,17 +849,29 @@ z n()
   return result;
 }  
 
-z uci(uc character)
+z number(ch str[],int len)
 {
-  z val;
-  val.uc=character;
-  return val;
-}  
+  z one;
+  one= n();
+  for(--len;len>=0;--len)
+  {
+    one=ps(uci(str[len]),one);
+  }
+  return one;
+}    
 
 int main()
 {
-  z one;
-  one=ps(uci('1'),ps(uci('2'),ps(uci('3'),ps(uci('4'),ps(uci('5'),n())))));
-  nmLine(sq(sq(sq(sq(c(one))))));
+  int cases;
+  ch one[10000];
+  ch two[10000];
+  scanf("%d",&cases);
+  int i;
+  for(i=0;i<cases;++i)
+  {
+    scanf("%s",one);
+    scanf("%s",two);
+    nmLine(fm(number(one,strlen(one)),number(two,strlen(two))));
+  }
   return 0;
 }  
