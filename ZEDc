@@ -5,9 +5,9 @@
 #define mu(x,y) x=x*y
 #define sq(x) x=mu(x,x)
 #define profile srand(time(NULL))
-#define pro pro1
-#define pro0
-#define pro1 printf(" PROFILE:%d ",1/(rand()/(RAND_MAX/pro2)))
+#define pro(str) pro1(str)
+#define pro0(str)
+#define pro1(str) printf(" :%d%s ",1/(rand()/(RAND_MAX/pro2)),str)
 #define pro2 1000
 #define ch char
 #define uc unsigned char
@@ -29,7 +29,7 @@
 #define ld long double
 
 #define hw0 in hw();
-#define hw1 in hw(){printf("hello");return 0;}
+#define hw1 in hw(){printf("hello");pro("hw");return 0;}
 
 hw0
 
@@ -43,7 +43,7 @@ int main()
   for(i=1;i<999;++i)
   {
     sq(x);
-    pro;
+    hw();
   }
   printf("%f",x);
   hw();
