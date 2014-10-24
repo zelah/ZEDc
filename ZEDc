@@ -5,7 +5,9 @@
 #define mu(x,y) x=y=x*y
 #define sq(x) x=mu(x,x)
 #define profile srand(time(NULL))
-#define pro printf(" PROFILE:%d ",1/(rand()/(RAND_MAX/1000)))
+#define pro1 printf(" PROFILE:%d ",1/(rand()/(RAND_MAX/1000)))
+#define pro0
+#define pro pro0
 
 typedef char ch;
 typedef unsigned char uc;
