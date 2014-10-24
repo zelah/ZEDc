@@ -2,32 +2,38 @@
 #include<stdlib.h>
 #include<time.h>
 #define tw(x) x=x+x
-#define mu(x,y) x=y=x*y
+#define mu(x,y) x=x*y
 #define sq(x) x=mu(x,x)
 #define profile srand(time(NULL))
 #define pro pro1
 #define pro0
 #define pro1 printf(" PROFILE:%d ",1/(rand()/(RAND_MAX/pro2)))
 #define pro2 1000
+#define ch char
+#define uc unsigned char
+#define sc signed char
+#define sh short
+#define us unsigned short
+#define ss signed short
+#define in int
+#define ui unsigned int
+#define si signed int
+#define lo long
+#define lu unsigned long
+#define ls signed long
+#define ll long long
+#define ul unsigned long long
+#define sl signed long long
+#define fl float
+#define db double
+#define ld long double
 
-typedef char ch;
-typedef unsigned char uc;
-typedef signed char sc;
-typedef short sh;
-typedef unsigned short us;
-typedef signed short ss;
-typedef int in;
-typedef unsigned int ui;
-typedef signed int si;
-typedef long lo;
-typedef unsigned long lu;
-typedef signed long ls;
-typedef long long ll;
-typedef unsigned long long ul;
-typedef signed long long sl;
-typedef float fl;
-typedef double db;
-typedef long double ld;
+#define hw0 in hw();
+#define hw1 in hw(){printf("hello");return 0;}
+
+hw0
+
+hw1
 
 int main()
 {
@@ -40,5 +46,6 @@ int main()
     pro;
   }
   printf("%f",x);
+  hw();
   return 0;
 }
