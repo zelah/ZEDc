@@ -2,13 +2,17 @@
 #include<stdlib.h>
 #include<time.h>
 #define tw(x) x=x+x
+#define hv(x) x=x/2
 #define mu(x,y) x=x*y
-#define sq(x) x=mu(x,x)
+#define dv(x,y) x=x/y
+#define ad(x,y) x=x+y
+#define sb(x,y) x=x-y
+#define sq(x) x=x*x
 #define profile srand(time(NULL))
 #define pro(str) pro1(str)
 #define pro0(str)
 #define pro1(str) printf(" :%d%s ",1/(rand()/(RAND_MAX/pro2)),str)
-#define pro2 1000
+#define pro2 10000
 #define ch char
 #define uc unsigned char
 #define sc signed char
@@ -28,13 +32,21 @@
 #define db double
 #define ld long double
 
-#define hw0 in hw();
-#define hw1 in hw(){printf("hello");pro("hw");return 0;}
+#define HW0 in HW();
+#define HW1 in HW(){printf("hello");pro("HW");return 0;}
+#define MP0(T) T *T##MP(T (*f1)(T),T *p);
+#define MP1(T) T *T##MP(T (*f1)(T),T *p){T i;for(i=p[0];i>0;--i){p[i]=(*f1)(p[i]);}pro("MP");return p;}
 
-hw0
+HW0
 
-hw1
+MP0(uc)
 
+MP1(uc)
+
+HW1
+
+uc ucINC(uc c){pro("ucINC");return ++c;}
+ 
 int main()
 {
   profile;
@@ -43,9 +55,16 @@ int main()
   for(i=1;i<999;++i)
   {
     sq(x);
-    hw();
+    HW();
   }
   printf("%f",x);
-  hw();
+  uc str[4];
+  str[0]=3;
+  str[1]='H';
+  str[2]='A';
+  str[3]='L';
+  ucMP(&ucINC,str);
+  printf("%c%c%c",str[1],str[2],str[3]);
   return 0;
 }
+ 
