@@ -1,18 +1,21 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<time.h>
-#define tw(x) x=x+x
+
+#define ad(x,y) x=x+y
+#define dv(x,y) x=x/y
 #define hv(x) x=x/2
 #define mu(x,y) x=x*y
-#define dv(x,y) x=x/y
-#define ad(x,y) x=x+y
 #define sb(x,y) x=x-y
 #define sq(x) x=x*x
+#define tw(x) x=x+x
+
 #define profile srand(time(NULL))
 #define pro(str) pro1(str)
 #define pro0(str)
 #define pro1(str) printf(" :%d%s ",1/(rand()/(RAND_MAX/pro2)),str)
 #define pro2 10000
+
 #define ch char
 #define uc unsigned char
 #define sc signed char
@@ -34,24 +37,25 @@
  
 #define F1(T) T (*f1)(T)
 #define P(T) T *p
-#define HW0 in HW();
-#define HW1 in HW(){printf("hello");pro("HW");return 0;}
+
+#define H0 in H();
+#define H1 in H(){pro("H");return 0;}
 #define INC0(T) T T##INC(T n);
 #define INC1(T) T T##INC(T n){pro("INC");return ++n;}
 #define MP0(T) T *T##MP(F1(T),P(T));
 #define MP1(T) T *T##MP(F1(T),P(T)){T i;for(i=p[0];i>0;--i){p[i]=(*f1)(p[i]);}pro("MP");return p;}
  
-HW0
+H0
  
 MP0(uc)
  
 INC0(uc)
-
+ 
 INC1(uc)
-
+ 
 MP1(uc)
  
-HW1
+H1
  
 int main()
 {
@@ -61,7 +65,7 @@ int main()
   for(i=1;i<999;++i)
   {
     sq(x);
-    HW();
+    H();
   }
   printf("%f",x);
   uc str[4];
@@ -73,5 +77,6 @@ int main()
   printf("%c%c%c",str[1],str[2],str[3]);
   return 0;
 }
+ 
  
  
