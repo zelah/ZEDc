@@ -5,6 +5,7 @@
 #define ad(x,y) x=x+y
 #define dv(x,y) x=x/y
 #define hv(x) x=x/2
+#define mp(l,t,f) t##MP(&t##f,l)
 #define mu(x,y) x=x*y
 #define sb(x,y) x=x-y
 #define sq(x) x=x*x
@@ -39,7 +40,7 @@
 #define P(T) T *p
  
 #define H0 in H();
-#define H1 in H(){pro("H");return 0;}
+#define H1 in H(){pro("");return 0;}
 #define INC0(T) T T##INC(T n);
 #define INC1(T) T T##INC(T n){pro("INC");return ++n;}
 #define MP0(T) T *T##MP(F1(T),P(T));
@@ -73,7 +74,8 @@ int main()
   str[1]='H';
   str[2]='A';
   str[3]='L';
-  ucMP(&ucINC,str);
+  mp(str,uc,INC);
   printf("%c%c%c",str[1],str[2],str[3]);
   return 0;
 }
+ 
