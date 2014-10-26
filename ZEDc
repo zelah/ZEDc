@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<time.h>
-
+ 
 #define ad(x,y) x=x+y
 #define dv(x,y) x=x/y
 #define hv(x) x=x/2
@@ -9,13 +9,13 @@
 #define sb(x,y) x=x-y
 #define sq(x) x=x*x
 #define tw(x) x=x+x
-
+ 
 #define profile srand(time(NULL))
 #define pro(str) pro1(str)
 #define pro0(str)
-#define pro1(str) printf(" :%d%s ",1/(rand()/(RAND_MAX/pro2)),str)
+#define pro1(str) printf(" :%d%s%d ",1/(rand()/(RAND_MAX/pro2)),str,time(NULL)-(100*(time(NULL)/100)))
 #define pro2 10000
-
+ 
 #define ch char
 #define uc unsigned char
 #define sc signed char
@@ -37,7 +37,7 @@
  
 #define F1(T) T (*f1)(T)
 #define P(T) T *p
-
+ 
 #define H0 in H();
 #define H1 in H(){pro("H");return 0;}
 #define INC0(T) T T##INC(T n);
@@ -77,6 +77,3 @@ int main()
   printf("%c%c%c",str[1],str[2],str[3]);
   return 0;
 }
- 
- 
- 
